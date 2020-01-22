@@ -1,0 +1,6 @@
+.posts {
+    background-color: cornsilk;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
