@@ -19,7 +19,7 @@ axios.defaults.baseURL = "http://localhost:5000";
 export const getPosts = () => dispatch => {
     dispatch(getPostsStarted());
     axios
-        .get("http://localhost:5000/api/posts/posts")
+        .get("/api/posts/posts")
         .then(res => dispatch(getPostsSuccess(res.data.posts)))
         .catch(err => dispatch(getPostsFail({network: err.message})));
 }
@@ -28,7 +28,7 @@ export const getPosts = () => dispatch => {
 export const getPost = id => dispatch => {
     dispatch(getPostStarted());
     axios
-        .get("http://localhost:5000/api/posts/post/"+id)
+        .get("/api/posts/post/"+id)
         .then(res => dispatch(getPostSuccess(res.data)))
         .catch(err => dispatch(getPostFail({network: err.message})));
 }
@@ -36,6 +36,7 @@ export const getPost = id => dispatch => {
 // Add post
 export const addPost = ( { title, author, body } ) => dispatch => {
     dispatch(addPostStarted());
+    console.log(title);
     axios
         .post("/api/posts/new", {
             title,
@@ -45,6 +46,7 @@ export const addPost = ( { title, author, body } ) => dispatch => {
         .then(res => dispatch(addPostSuccess(res.data)))
         .catch(err => {
             if (err.response) {
+                console.log(err.response);
                 dispatch(addPostFail(err.response.data));
             } else {
                 dispatch(addPostFail({network: err.message}));

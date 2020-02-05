@@ -1,9 +1,12 @@
 import React from 'react';
 import Post from './Post.js';
-import './Posts.css';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getPosts } from '../actions/postActions';
+import { 
+    CardDeck,
+    Container
+} from 'reactstrap';
 
 
 class Posts extends React.Component {
@@ -13,15 +16,31 @@ class Posts extends React.Component {
     }
 
     render() {
-        return (
-            <div className="posts">
-                <div>{this.props.errors.network}</div>
-                {this.props.posts.map(post =>
+        let loading;
+        let error;
+        let posts;
+        if (this.props.errors.network) {
+            error = <div>Error loading blog posts: {this.props.errors.network}</div>
+        }
+        if (this.props.loading) {
+            loading = <img src="/img/loading.gif"></img>
+        } else {
+            posts = this.props.posts.map(post =>
                 <Post
                     key={post.id}
                     post={post}
                 />
-                )}
+                )
+        }
+        return (
+            <div className="posts">
+                <div className="d-flex justify-content-center">
+                    {loading}
+                    {error}
+                </div>
+                <CardDeck>
+                    {posts}
+                </CardDeck>
             </div>
         )
     }
@@ -35,7 +54,8 @@ Posts.propTypes = {
 
 const mapStateToProps = state => ({
     errors: state.errors,
-    posts: state.posts
+    posts: state.posts,
+    loading: state.loading
 });
 
 

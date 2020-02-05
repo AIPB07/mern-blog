@@ -1,0 +1,33 @@
+@use 'base';
+
+.navbar-custom {
+    background-color: base.$blue;
+
+    .navbar-text,
+    .navbar-brand,
+    .navbar-toggler,
+    .nav-link {
+        color: base.$yellow;
+    }
+    .navbar-text {
+        font-size: 4rem;
+    }
+    .navbar-brand,
+    .navbar-toggler,
+    .nav-link,
+    .navbar-plus {
+        font-size: 3rem;
+    }
+    .navbar-plus,
+    .navbar-plus:active,
+    .navbar-plus:hover,
+    .navbar-plus:focus {
+        color: base.$yellow;
+        background-color: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+    .navbar-plus:hover {
+        color: white;
+    }
+}

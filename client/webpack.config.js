@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     entry: "./src/index.js",
@@ -7,18 +8,32 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.(js|jsx)$/,
-                exclude: /(node_modules|bower_components)/,
-                loader: "babel-loader",
-                options: {presets: ["@babel/env"]}
+              test: /\.(js|jsx)$/,
+              exclude: /(node_modules|bower_components)/,
+              loader: "babel-loader",
+              options: { presets: ["@babel/env"] }
             },
             {
-                test: /\.css$/,
-                use: ["style-loader", "css-loader"]
+              test: /\.(sa|sc|c)ss$/,
+              use: [
+                {
+                  loader: MiniCssExtractPlugin.loader
+                },
+                {
+                  loader: "css-loader",
+                },
+                {
+                  loader: "sass-loader",
+                  options: {
+                    implementation: require('sass')
+                  }
+
+                }
+              ]
             }
-        ]
+          ]
     },
-    resolve: {extensions: ["*", ".js", ".jsx"]},
+    resolve: {extensions: [".js", ".jsx", ".scss"]},
     output: {
         path: path.resolve(__dirname, "dist/"),
         publicPath: "/dist/",
@@ -30,5 +45,8 @@ module.exports = {
         publicPath: "http://localhost:5000/dist/",
         hotOnly: true
     },
-    plugins: [new webpack.HotModuleReplacementPlugin()]
+    plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+        new MiniCssExtractPlugin({filename: "app.bundle.css"})
+    ]
 }
