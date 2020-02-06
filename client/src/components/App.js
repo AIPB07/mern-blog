@@ -7,7 +7,6 @@ import '../styles/App';
 import '../styles/Navbar';
 import CustomNavbar from './CustomNavbar';
 import Posts from './Posts';
-import CreatePost from './CreatePost';
 import FullPost from './FullPost';
 import store from '../store';
 import {

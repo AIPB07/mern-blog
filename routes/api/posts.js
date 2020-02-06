@@ -9,6 +9,32 @@ const Post = require('../../models/Post');
 // Instantiate Router object
 const router = express.Router();
 
+// Middleware for parsing form data
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, './uploads/');
+    },
+    filename: function(req, file, cb) {
+        cb(null, Date.now() + file.originalname);
+    }
+});
+const fileFilter = (req, file, cb) => {
+    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+        cb(null, true)
+    } else {
+        cb(new Error('Invalid file type'), false)
+    }
+}
+const upload = multer({
+    storage: storage, 
+    limits: {
+    fileSize: 1024 * 1024 * 3
+    },
+    fileFilter: fileFilter
+});
+const postImageUpload = upload.single('postImage');
+
 // @route GET api/posts/posts
 // @desc Get and return array of blog posts
 // @access Public
@@ -24,6 +50,7 @@ router.get('/posts', (req, res) => {
             post.title = item.title;
             post.author = item.author;
             post.date = item.date;
+            post.postImage = item.postImage;
             posts.push(post);
             post = {};
         })
@@ -47,25 +74,36 @@ router.get('/post/:id', (req, res) => {
 // @desc Create new post
 // @access Public
 router.post('/new', (req, res) => {
-    // Validate input
-    const {errors, isValid} = validateCreatePost(req.body);
-
-    if (!isValid) {
-        return res.status(400).json(errors)
-    } else {
-        // Create new post document
-        const newPost = new Post({
-            title: req.body.title,
-            author: req.body.author,
-            body: req.body.body,
-            date: Date.now()
-        });
-        // Save document in database
-        newPost
-            .save()
-            .then(post => res.status(200).json(post))
-            .catch(err => console.log(err))
-    }
+    let fileError = '';
+    postImageUpload(req, res, function(err) {
+        if (err) {
+            if (err.message) {
+                fileError = err.message;
+            } else {
+                fileError = 'Invalid file type';
+            }
+        }
+        // Validate text inputs
+        const { errors, isValid } = validateCreatePost(req.body);
+        if (!isValid || fileError) {
+            errors.file = fileError;
+            return res.status(400).json(errors);
+        } else {
+            // Create new post document
+            const newPost = new Post({
+                title: req.body.title,
+                author: req.body.author,
+                body: req.body.body,
+                date: Date.now(),
+                postImage: req.file.path
+            });
+            // Save document in database
+            newPost
+                .save()
+                .then(post => res.status(200).json(post))
+                .catch(err => console.log(err))
+        }
+    })    
 });
 
 module.exports = router;

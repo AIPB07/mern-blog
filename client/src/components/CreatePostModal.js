@@ -4,8 +4,8 @@ import {
     Form,
     FormGroup,
     Input,
-    FormText,
     Label,
+    FormText,
     Modal,
     ModalHeader,
     ModalBody
@@ -15,32 +15,31 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addPost } from '../actions/postActions';
 
+const defaultState = {
+    isOpen: false,
+    title: "",
+    author: "",
+    body: "",
+    postImage: null,
+    errors: {}
+};
+
 class CreatePostModal extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            isOpen: false,
-            title: "",
-            author: "",
-            body: "",
-            errors: {}
-        };
+        this.state = defaultState;
     };
 
     componentDidUpdate (prevProps) {
         const { errors } = this.props;
-        // Empty fields if post submitted successfully
+        // Prevent infinite loop
         if (prevProps.errors != errors) {
             this.setState({
                 errors: errors
             });
-            if (!errors.title && !errors.author && !errors.body) {
-                this.setState ({
-                    title: "",
-                    author: "",
-                    body: "",
-                    errors: {}
-                });
+            // Clear fields and close modal if form submitted succesfully
+            if (!errors.title && !errors.author && !errors.body && !errors.file) {
+                this.setState (defaultState);
             };
         };
     }
@@ -48,18 +47,25 @@ class CreatePostModal extends React.Component {
     handleSubmit = event => {
         event.preventDefault();
 
-        const postData = {
-            title: this.state.title,
-            author: this.state.author,
-            body: this.state.body
-        };
-        this.props.addPost(postData);
+        let formData = new FormData();
 
+        formData.append("title", this.state.title);
+        formData.append("author", this.state.author);
+        formData.append("body", this.state.body);
+        formData.append("postImage", this.state.postImage);
+
+        this.props.addPost(formData);
     }
 
     handleChange = event => {
         this.setState({
             [event.target.id]: event.target.value
+        })
+    }
+
+    handleImageChange = event => {
+        this.setState({
+            postImage: event.target.files[0]
         })
     }
 
@@ -120,8 +126,21 @@ class CreatePostModal extends React.Component {
 
                                 />
                                 <div className="input-error">{errors.body}</div>
+                                <FormGroup>
+                                    <Label htmlFor="image">Image</Label>
+                                    <Input
+                                        onChange={this.handleImageChange}
+                                        type="file"
+                                        name="image"
+                                        id="image"
+                                    />
+                                    <div className="input-error">{errors.file}</div>
+                                    <FormText color="muted">
+                                        Optional. Must be .jpeg or .png and not exceed 5MB
+                                    </FormText>
+                                </FormGroup>
                             </FormGroup>
-                            <Button type="submit">Submit</Button>
+                            <Button className="custom-submit" type="submit">Submit</Button>
                         </Form>
                     </ModalBody>
                 </Modal>

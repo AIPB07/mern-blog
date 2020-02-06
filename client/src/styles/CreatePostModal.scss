@@ -1,3 +1,5 @@
+@use 'base';
+
 .modal-title {
     flex-grow: 15;
     text-align: center;
@@ -9,4 +11,11 @@
 
 .input-error {
     color: red;
+}
+
+.custom-submit {
+    color: base.$yellow !important;
+    background-color: base.$blue !important;
+    border: none !important;
+    box-shadow: none !important;
 }

@@ -34,15 +34,10 @@ export const getPost = id => dispatch => {
 }
 
 // Add post
-export const addPost = ( { title, author, body } ) => dispatch => {
+export const addPost = (formData) => dispatch => {
     dispatch(addPostStarted());
-    console.log(title);
     axios
-        .post("/api/posts/new", {
-            title,
-            author,
-            body
-        })
+        .post("/api/posts/new", formData)
         .then(res => dispatch(addPostSuccess(res.data)))
         .catch(err => {
             if (err.response) {

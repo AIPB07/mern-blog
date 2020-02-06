@@ -8,6 +8,8 @@ const posts = require('./routes/api/posts');
 // Initialise express app
 const app = express();
 
+// Make 'uploads' static/publicly available
+app.use('/uploads', express.static('uploads'));
 // Set app to use bodyParser middleware
 app.use(bodyParser.urlencoded({
     extended: false
