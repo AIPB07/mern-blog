@@ -9,7 +9,10 @@ import {
     GET_POST_FAIL,
     ADD_POST_STARTED,
     ADD_POST_SUCCESS,
-    ADD_POST_FAIL
+    ADD_POST_FAIL,
+    DELETE_POST_STARTED,
+    DELETE_POST_SUCCESS,
+    DELETE_POST_FAIL
 } from '../actions/types';
 
 // Configure axios
@@ -36,16 +39,27 @@ export const getPost = id => dispatch => {
 // Add post
 export const addPost = (formData) => dispatch => {
     dispatch(addPostStarted());
+    console.log(formData);
     axios
         .post("/api/posts/new", formData)
         .then(res => dispatch(addPostSuccess(res.data)))
         .catch(err => {
             if (err.response) {
-                console.log(err.response);
                 dispatch(addPostFail(err.response.data));
-            } else {
-                dispatch(addPostFail({network: err.message}));
             }
+            console.log(err);
+        });
+}
+
+// Delete post by id
+export const deletePost = id => dispatch => {
+    dispatch(deletePostStarted());
+    axios
+        .delete("/api/posts/delete/"+id)
+        .then(res => dispatch(deletePostSuccess(id)))
+        .catch(err => {
+            console.log(err);
+            dispatch(deletePostFail())
         });
 }
 
@@ -96,3 +110,18 @@ const addPostFail = errors => ({
         errors
     }
 });
+
+const deletePostStarted = () => ({
+    type: DELETE_POST_STARTED
+});
+
+const deletePostSuccess = id => ({
+    type: DELETE_POST_SUCCESS,
+    payload: {
+        id
+    }
+});
+
+const deletePostFail = () => ({
+    type: DELETE_POST_FAIL
+})

@@ -106,4 +106,14 @@ router.post('/new', (req, res) => {
     })    
 });
 
+// @route DELETE api/posts/delete
+// @desc Delete a post by id
+// @access Public
+router.delete('/delete/:id', (req, res) => {
+    // Remove post
+    Post.deleteOne({ _id: req.params.id })
+    .then(result => res.status(200).json({deleted: result.deletedCount}))
+    .catch(err => console.log(err))
+});
+
 module.exports = router;

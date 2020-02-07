@@ -11,6 +11,7 @@ import {
     CardSubtitle,
     CardLink
 } from 'reactstrap';
+import DeletePostModal from './DeletePostModal';
 
 function Post( { post } ) {
     let imgURL;
@@ -25,14 +26,21 @@ function Post( { post } ) {
                 <CardImg top width="100%" src={imgURL} />
                 <CardBody>
                     <CardTitle>{post.title}</CardTitle>
-                    <CardSubtitle>By {post.author} {getFormattedDate(post.date)}</CardSubtitle>
-                    <Link
-                        to={{
-                            pathname:"/post/" + post.id
-                        }}
-                    >
-                        <CardText>View full post</CardText>
-                    </Link>
+                    <CardSubtitle>By {post.author}</CardSubtitle>
+                    <CardSubtitle>{getFormattedDate(post.date)}</CardSubtitle>
+                    <div className="d-flex justify-content-between">
+                        <Link
+                            to={{
+                                pathname: "/post/" + post.id
+                            }}
+                        >
+                            View full post
+                        </Link>
+                        <DeletePostModal
+                            postId={post.id}
+                            postTitle={post.title} 
+                        />
+                    </div>
                 </CardBody>
             </Card>
         </div>

@@ -152,7 +152,6 @@ class CreatePostModal extends React.Component {
 CreatePostModal.propTypes = {
     addPost: PropTypes.func.isRequired,
     errors: PropTypes.object.isRequired
-
 }
 
 const mapStateToProps = state => ({

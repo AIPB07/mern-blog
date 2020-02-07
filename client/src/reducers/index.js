@@ -7,7 +7,10 @@ import {
     GET_POST_FAIL,
     ADD_POST_STARTED,
     ADD_POST_SUCCESS,
-    ADD_POST_FAIL
+    ADD_POST_FAIL,
+    DELETE_POST_STARTED,
+    DELETE_POST_SUCCESS,
+    DELETE_POST_FAIL,
 } from '../actions/types';
 
 const initialState = {
@@ -39,40 +42,47 @@ const rootReducer = (state=initialState, action) => {
             };
         case GET_POST_STARTED:
             return {
-                ...state,
-                loading: true
+                ...state
             };
         case GET_POST_SUCCESS:
             return {
                 ...state,
-                loading: false,
                 currentPost: action.payload,
                 errors: {}
             };
         case GET_POST_FAIL:
             return {
                 ...state,
-                loading: false,
                 errors: action.payload.errors
             };
         case ADD_POST_STARTED:
             return {
-                ...state,
-                loading: true
+                ...state
             };
         case ADD_POST_SUCCESS:
             return {
                 ...state,
                 posts: state.posts.concat(action.payload),
-                loading: false,
                 errors: {}
             };
         case ADD_POST_FAIL:
             return {
                 ...state,
-                loading: false,
                 errors: action.payload.errors
             };
+        case DELETE_POST_STARTED:
+            return {
+                ...state
+            }
+        case DELETE_POST_SUCCESS:
+            return {
+                ...state,
+                posts: state.posts.filter(item => item.id != action.payload.id)
+            }
+        case DELETE_POST_FAIL:
+            return {
+                ...state
+            }
         default:
             return state;
     };
