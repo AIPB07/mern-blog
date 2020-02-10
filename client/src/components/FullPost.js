@@ -2,31 +2,67 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import ReactMarkdown from 'react-markdown';
+import {
+    Col,
+    Row
+} from 'reactstrap';
 import { getPost } from '../actions/postActions';
 import { getFormattedDate } from '../helpers';
-import {
-    Container,
-    Row,
-    Col
-} from 'reactstrap';
+import '../styles/FullPost';
 
 
 class FullPost extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            author: '',
+            title: '',
+            body: '',
+            date: ''
+        }
+        
+    }
 
     componentDidMount() {
         const id = this.props.match.params.id;
         this.props.getPost(id);
     }
 
+    componentDidUpdate(prevProps) {
+        if (this.props != prevProps) {
+            this.setState ({
+                author: this.props.currentPost.author,
+                title: this.props.currentPost.title,
+                body: this.props.currentPost.body,
+                date: this.props.currentPost.date,
+                imgURL: this.props.currentPost.postImage
+            });
+        };
+    }
+
     render() {
-        const formattedDate = getFormattedDate(this.props.currentPost.date);
+        const formattedDate = getFormattedDate(this.state.date);
         return (
-            <div>
-                <h1>{this.props.currentPost.title}</h1>
-                <div>By {this.props.currentPost.author}</div>
-                <div>{formattedDate}</div>
-                <div>{this.props.currentPost.body}</div>
-            </div>
+            <Row className="post-content">
+                <Col xs="3" />
+                <Col xs="6">
+                    <h1>{this.state.title}</h1>
+                    <Row>
+                        <Col xs="4" />
+                        <Col xs="4">
+                            <div className="d-flex justify-content-around">
+                                <div className="author">By {this.state.author}</div>
+                                <div className="date">{formattedDate}</div>
+                            </div>
+                        </Col>
+                        <Col xs="4" />
+                    </Row>
+                    <img className="img-fluid" src={'http://localhost:5000/' + this.state.imgURL}></img>
+                    <ReactMarkdown source={this.state.body} />
+                </Col>
+                <Col xs="3" />
+            </Row>
         )
     }
 }

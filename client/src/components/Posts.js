@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { getPosts } from '../actions/postActions';
 import { 
     CardDeck,
-    Container
+    CardGroup
 } from 'reactstrap';
 
 
@@ -27,7 +27,7 @@ class Posts extends React.Component {
         } else {
             posts = this.props.posts.map(post =>
                 <Post
-                    key={post.id}
+                    key={post._id}
                     post={post}
                 />
                 )
@@ -55,7 +55,7 @@ Posts.propTypes = {
 const mapStateToProps = state => ({
     errors: state.errors,
     posts: state.posts,
-    loading: state.loading
+    loading: state.postsLoading
 });
 
 

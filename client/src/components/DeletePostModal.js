@@ -1,5 +1,6 @@
 import React from 'react';
 import { deletePost } from '../actions/postActions';
+import '../styles/DeletePostModal';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
@@ -31,8 +32,12 @@ class DeletePostModal extends React.Component {
     render() {
         return (
             <div>
-                <Button onClick={this.toggle}>
-                    <i className="fas fa-trash-alt"></i>
+                <Button 
+                    className="custom-trash"
+                    onClick={this.toggle}
+                    title="Remove post"
+                >
+                    <i className="fas fa-times"></i>
                 </Button>
                 <Modal
                     isOpen={this.state.isOpen}
@@ -40,15 +45,23 @@ class DeletePostModal extends React.Component {
                 >
                     <ModalHeader toggle={this.toggle}>Delete post</ModalHeader>
                     <ModalBody>
-                        <div>
+                        <div style={{textAlign: 'center'}}>
                             Are you sure you want to delete the post: '{this.props.postTitle}'?
                         </div>
-                        <Button onClick={this.confirmDelete}>
-                            Yes
-                        </Button>
-                        <Button onClick={this.toggle}>
-                            No
-                        </Button>
+                        <div className="d-flex justify-content-around pt-3">
+                            <Button 
+                                onClick={this.confirmDelete}
+                                color="light"
+                            >
+                                Yes
+                            </Button>
+                            <Button 
+                                onClick={this.toggle}
+                                color="dark"
+                            >
+                                No
+                            </Button>
+                        </div>
                     </ModalBody>
                 </Modal>
             </div>

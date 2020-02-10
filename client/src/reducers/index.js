@@ -16,7 +16,8 @@ import {
 const initialState = {
     posts: [],
     currentPost: {},
-    loading: false,
+    postsLoading: false,
+    submitLoading: false,
     errors: {}
 };
 
@@ -25,19 +26,19 @@ const rootReducer = (state=initialState, action) => {
         case GET_POSTS_STARTED:
             return {
                 ...state,
-                loading: true
+                postsLoading: true
             };
         case GET_POSTS_SUCCESS:
             return {
                 ...state,
                 posts: action.payload,
-                loading: false,
+                postsLoading: false,
                 errors: {}
             };
         case GET_POSTS_FAIL:
             return {
                 ...state,
-                loading: false,
+                postsLoading: false,
                 errors: action.payload.errors
             };
         case GET_POST_STARTED:
@@ -57,17 +58,20 @@ const rootReducer = (state=initialState, action) => {
             };
         case ADD_POST_STARTED:
             return {
-                ...state
+                ...state,
+                submitLoading: true
             };
         case ADD_POST_SUCCESS:
             return {
                 ...state,
                 posts: state.posts.concat(action.payload),
+                submitLoading: false,
                 errors: {}
             };
         case ADD_POST_FAIL:
             return {
                 ...state,
+                submitLoading: false,
                 errors: action.payload.errors
             };
         case DELETE_POST_STARTED:
@@ -77,7 +81,7 @@ const rootReducer = (state=initialState, action) => {
         case DELETE_POST_SUCCESS:
             return {
                 ...state,
-                posts: state.posts.filter(item => item.id != action.payload.id)
+                posts: state.posts.filter(item => item._id != action.payload.id)
             }
         case DELETE_POST_FAIL:
             return {

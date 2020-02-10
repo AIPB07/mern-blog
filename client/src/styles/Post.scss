@@ -1,6 +1,24 @@
+.card-link:link,
+.card-link:visited {
+    color: black;
+}
+
 .card-deck {
-    justify-content: space-between;
+    justify-content: space-evenly;
     margin-bottom: 15px;
+}
+
+.card-title {
+    text-align: center;
+    font-size: 1.4rem;
+}
+
+.card-body {
+    background-color: #FAFAFA;
+}
+
+.card-subtitle {
+    align-self: center;
 }
 
 /* Large screens */

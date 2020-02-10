@@ -81,9 +81,20 @@ class CreatePostModal extends React.Component {
 
     render() {
         const { errors } = this.state;
+        let submit;
+
+        if (this.props.loading) {
+            submit = <img className="img-fluid" src="/img/submit-loading.gif"></img>
+        } else {
+            submit = <Button color="dark" type="submit">Submit</Button>
+        }
         return (
             <div>
-                <Button className="navbar-plus" onClick={this.toggle}>
+                <Button 
+                    className="navbar-plus" 
+                    onClick={this.toggle}
+                    title="Add post"
+                >
                     <i className="fas fa-plus"></i>
                 </Button>
                 <Modal 
@@ -136,11 +147,11 @@ class CreatePostModal extends React.Component {
                                     />
                                     <div className="input-error">{errors.file}</div>
                                     <FormText color="muted">
-                                        Optional. Must be .jpeg or .png and not exceed 5MB
+                                        Must be .jpeg or .png and not exceed 5MB
                                     </FormText>
                                 </FormGroup>
                             </FormGroup>
-                            <Button className="custom-submit" type="submit">Submit</Button>
+                            {submit}
                         </Form>
                     </ModalBody>
                 </Modal>
@@ -155,7 +166,8 @@ CreatePostModal.propTypes = {
 }
 
 const mapStateToProps = state => ({
-    errors: state.errors
+    errors: state.errors,
+    loading: state.submitLoading
 })
 
 export default connect(

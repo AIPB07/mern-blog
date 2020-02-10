@@ -1,16 +1,16 @@
 @use 'base';
 
 .navbar-custom {
-    background-color: base.$blue;
+    background-color: white;
 
     .navbar-text,
     .navbar-brand,
     .navbar-toggler,
     .nav-link {
-        color: base.$yellow;
+        color: black;
     }
     .navbar-text {
-        font-size: 4rem;
+        font-size: 8rem;
     }
     .navbar-brand,
     .navbar-toggler,
@@ -22,12 +22,12 @@
     .navbar-plus:active,
     .navbar-plus:hover,
     .navbar-plus:focus {
-        color: base.$yellow;
+        color: black;
         background-color: transparent !important;
         border: none !important;
         box-shadow: none !important;
     }
     .navbar-plus:hover {
-        color: white;
+        color: grey;
     }
 }

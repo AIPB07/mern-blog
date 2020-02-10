@@ -37,7 +37,7 @@ class CustomNavbar extends React.Component {
                     </div>
                     
                         <NavbarText>
-                            Al's Blog
+                            <i className="far fa-lightbulb"></i>
                         </NavbarText>
                     
                     <div className="ml-auto">

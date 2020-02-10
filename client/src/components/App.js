@@ -23,6 +23,7 @@ const App = () =>
         <Router>
            <div className="app">
                <CustomNavbar />
+               <hr/>
                <Container fluid>
                    <Row>
                        <Col xs={12}>
