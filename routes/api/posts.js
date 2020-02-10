@@ -29,7 +29,7 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({
     storage: storage, 
     limits: {
-    fileSize: 1024 * 1024 * 3
+    fileSize: 1024 * 1024 * 5
     },
     fileFilter: fileFilter
 });
@@ -82,6 +82,9 @@ router.post('/new', (req, res) => {
             } else {
                 fileError = 'Invalid file type';
             }
+        }
+        if (!req.file) {
+            fileError = 'Image is required';
         }
         // Validate text inputs
         const { errors, isValid } = validateCreatePost(req.body);
