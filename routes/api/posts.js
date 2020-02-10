@@ -46,7 +46,7 @@ router.get('/posts', (req, res) => {
     // Find all posts
     Post.find({}).then(data => {
         data.forEach(item => {
-            post.id = item._id;
+            post._id = item._id;
             post.title = item.title;
             post.author = item.author;
             post.date = item.date;
