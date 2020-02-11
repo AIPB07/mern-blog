@@ -47,5 +47,10 @@ To concurrently run the test server and client, in the root directory type
 npm run dev
 ```
 You can then visit `localhost:3000` to see the project in action.
+## Future work
+* User authentication
+* Edit posts
+* Comment on posts
+* Filter posts by category (e.g. technology)
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
