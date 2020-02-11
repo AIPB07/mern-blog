@@ -49,14 +49,14 @@ class FullPost extends React.Component {
                 <Col xs="6">
                     <h1>{this.state.title}</h1>
                     <Row>
-                        <Col xs="4" />
-                        <Col xs="4">
-                            <div className="d-flex justify-content-around">
+                        <Col xs="2" />
+                        <Col xs="8">
+                            <div className="d-flex justify-content-between">
                                 <div className="author">By {this.state.author}</div>
                                 <div className="date">{formattedDate}</div>
                             </div>
                         </Col>
-                        <Col xs="4" />
+                        <Col xs="2" />
                     </Row>
                     <img className="img-fluid" src={'http://localhost:5000/' + this.state.imgURL}></img>
                     <ReactMarkdown source={this.state.body} />

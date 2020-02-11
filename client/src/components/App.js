@@ -10,8 +10,6 @@ import Posts from './Posts';
 import FullPost from './FullPost';
 import store from '../store';
 import {
-    Navbar,
-    NavbarBrand,
     Container,
     Row,
     Col
@@ -23,8 +21,8 @@ const App = () =>
         <Router>
            <div className="app">
                <CustomNavbar />
-               <hr/>
                <Container fluid>
+                   <hr />
                    <Row>
                        <Col xs={12}>
                            <Route exact path="/">
