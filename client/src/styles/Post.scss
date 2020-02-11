@@ -1,6 +1,8 @@
+@use 'base';
+
 .card-link:link,
 .card-link:visited {
-    color: black;
+    color: base.$primary;
 }
 
 .card-deck {

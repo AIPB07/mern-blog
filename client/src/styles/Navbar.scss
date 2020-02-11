@@ -1,13 +1,13 @@
 @use 'base';
 
 .navbar-custom {
-    background-color: white;
+    background-color: base.$secondary;
 
     .navbar-text,
     .navbar-brand,
     .navbar-toggler,
     .nav-link {
-        color: black;
+        color: base.$primary;
     }
     .navbar-text {
         font-size: 8rem;
@@ -22,7 +22,7 @@
     .navbar-plus:active,
     .navbar-plus:hover,
     .navbar-plus:focus {
-        color: black;
+        color: base.$primary;
         background-color: transparent !important;
         border: none !important;
         box-shadow: none !important;

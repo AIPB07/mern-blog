@@ -1,7 +1,9 @@
+@use 'base';
+
 hr {
     border: none;
     height: 2px !important;
-    background:black;
+    background: base.$primary;
  }
 
 
