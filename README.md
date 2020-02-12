@@ -39,7 +39,7 @@ Find and copy your MongoDB URI. Export it in a new file named `keys.js` in the n
 
 E.g.
 ```
-module.exports = mongoURI = "mongodb+srv://<dbuser>:<dbpassword>@test.mongodb.net/test
+module.exports = mongoURI = "mongodb+srv://<dbuser>:<dbpassword>@test.mongodb.net/test";
 ```
 ## Usage
 To concurrently run the test server and client, in the root directory type
