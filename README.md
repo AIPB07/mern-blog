@@ -35,7 +35,7 @@ Back in the project's root directory, create a new directory named `config`
 ```
 mkdir config
 ```
-Find and copy your MongoDB URI. Export it in a new file named `keys.js` in the newly created `config` directory. 
+Find and copy your MongoDB URI. Export it in a new file named `keys.js` in the newly created `config` directory 
 
 ```
 module.exports = mongoURI = "mongodb+srv://<dbuser>:<dbpassword>@test.mongodb.net/test";
